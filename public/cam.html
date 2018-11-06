@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>GUZY GO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+  <script src="./js/main.js"></script>
+</head>
+<body>
+  <h1>CAM page</h1>
+    <script type = 'text/javascript'>
+      var image = document.createElement('img') ;
+      image.src = '/img'+'?time='+new Date().getTime() ;
+
+      setInterval(function () {
+          changeImage();
+        }, 400);
+
+      function changeImage() {
+          image.src = '/img'+'?time='+new Date().getTime();
+          document.body.appendChild(image);
+        }
+    </script>
+
+    <form action = '/test' method = 'post'>
+      <input type = 'submit' value = 'on' name = 'led' >
+      <input type = 'submit' value = 'off' name = 'led' >
+    </form>
+</body>
+</html>
