@@ -36,11 +36,13 @@ app.use('/static', express.static('uploads'))
 const port = process.env.PORT || 8080;
 
 // [CONFIGURE ROUTER]
-const api = require('./routes/api.js')(app. Product);
+const api = require('./routes/api.js')(app, Product);
 app.use('/api', api);
 
 const route = require('./routes/index.js')(app);
-app.use('/');
+app.use('/', route);
+
+
 
 // [RUN SERVER]
 const server = app.listen(port, function(){

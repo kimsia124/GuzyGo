@@ -9,6 +9,7 @@
     "fs": "^0.0.1-security",
     "mongoose": "^5.3.2",
     "multer": "^1.4.1",
+    "raspicam": "^0.2.14",
     "unirest": "^0.5.1"
   }
 }

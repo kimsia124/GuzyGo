@@ -22,7 +22,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const request = require('request');
+const express = require('express');
 
+const router = express.Router();
 
 // [CONST VALUE]
 
@@ -42,4 +44,6 @@ module.exports = (app) => {
   });
   
   camera.start() ;
+
+  return router;
 }

@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const request = require('request');
+const express = require('express');
 
 // [PACKAGE CONFIGURE]
 const storage = multer.diskStorage({
@@ -24,10 +25,12 @@ const upload = multer({
 // [CONST VALUE]
 const MY_APPKEY = '801c76388a679d223320a2ac616c78c8';
 
+const router = express.Router();
+
 module.exports = (app, Product) => {
 
     // [GET] GET ALL PRODUCTS
-    app.get('/products', (req,res) => {
+    app.get('/products', (req, res) => {
       Product.find((err, products) => {
         if (err) return res.status(500).send({error: 'database failure'});
         res.json(products);
@@ -35,7 +38,7 @@ module.exports = (app, Product) => {
     });
     
     // [GET] GET SINGLE PRODUCT
-    app.get('/products/:product_id', (req,res) => {
+    app.get('/products/:product_id', (req, res) => {
       Product.findOne({_id: req.params.product_id}, (err, product) => {
         if (err) return res.status(500).json({error: err});
         if (!product) return res.status(404).json({error: 'product not found'});
@@ -150,7 +153,7 @@ module.exports = (app, Product) => {
         if(!product) return res.status(404).json({ error: 'product not found' });
 
         product.amount -= req.body.amount;
-        
+
         product.save((err) => {
             if(err) res.status(500).json({error: 'failed to update'});
             res.json({message: 'product updated'});
@@ -158,4 +161,6 @@ module.exports = (app, Product) => {
 
       });
     });
+
+    return router;
 }
