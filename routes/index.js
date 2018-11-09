@@ -31,10 +31,6 @@ module.exports = (app) => {
     camera.stop();
   });
 
-  camera.on('read', function() {
-    img_flag = 1;
-  });
-
   app.get('/camera', function(req, res) {
       camera.start() ;
   });
@@ -44,10 +40,7 @@ module.exports = (app) => {
   
   app.get('/img', function (req, res) {
     console.log('get /img') ;
-      if (img_flag == 1) {
-        img_flag = 0 ;
-        res.sendfile('images/camera.jpg') ;
-      }
+      res.sendfile('images/camera.jpg') ;
   }) ;
 
 
