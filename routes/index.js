@@ -39,7 +39,7 @@ module.exports = (app) => {
   });
   
   app.get('/img', async function (req, res) {
-    await camera.set('output', '.images/' + req.query.time + '.jpg');
+    camera.set('output', '.images/' + req.query.time + '.jpg');
     camera.start();
   }) ;
 
