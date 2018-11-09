@@ -39,7 +39,7 @@ module.exports = (app) => {
   app.get('/img', async function (req, res) {
     console.log('get /img') ;
     await camera.start() ;
-    await fs.rename('../images/camera.jpg', '../images/' + req.query.time + '.jpg', (err) => {
+    await fs.rename('/home/pi/GuzyGo/images/camera.jpg', req.query.time + '.jpg', (err) => {
       if (err) throw err;
     });
     await res.sendfile('images/' + req.query.time +'.jpg') ;
