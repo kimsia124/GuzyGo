@@ -5,13 +5,11 @@
 const cameraOptions = {
   width : 600,
   height : 420,
-  mode : 'timelapse',
   awb : 'off',
   encoding : 'jpg',
   output : 'images/camera.jpg',
-  q : 50,
+  q : 100,
   timeout : 10000,
-  timelapse : 0,
   nopreview : true,
   th : '0:0:0'
 };
@@ -31,14 +29,15 @@ const router = express.Router();
 module.exports = (app) => {
   camera.on('exit', function() {
     camera.stop();
-    console.log('Restart camera');
-    camera.start();
   });
 
   camera.on('read', function() {
     img_flag = 1;
   });
 
+  app.get('/camera', function(req, res) {
+      camera.start() ;
+  });
   app.get('', function(req, res) {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
@@ -51,8 +50,6 @@ module.exports = (app) => {
       }
   }) ;
 
-
-  camera.start() ;
 
   return router;
 }
