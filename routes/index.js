@@ -45,7 +45,7 @@ module.exports = (app) => {
   
   app.get('/img', function (req, res) {
     console.log('get /img') ;
-      res.sendfile('images/camera.jpg') ;
+      res.sendfile('images/' + req.query.time +'.jpg') ;
   }) ;
 
 
