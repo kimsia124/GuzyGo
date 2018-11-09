@@ -11,8 +11,6 @@
 <body>
   <h1>CAM page</h1>
     <script type = 'text/javascript'>
-
-      
       var image = document.createElement('img') ;
       image.src = '/img'+'?time='+new Date().getTime() ;
 
@@ -23,7 +21,7 @@
     </script>
 
     <form action = '/camera' method = 'get' onclick='changeImage()'>
-      <input type = 'submit' value = 'on' name = 'led' >
+      <input type = 'submit'>
     </form>
 </body>
 </html>
