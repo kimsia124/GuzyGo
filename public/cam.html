@@ -16,17 +16,13 @@
       var image = document.createElement('img') ;
       image.src = '/img'+'?time='+new Date().getTime() ;
 
-      setInterval(function () {
-          changeImage();
-        }, 400);
-
       function changeImage() {
           image.src = '/img'+'?time='+new Date().getTime();
           document.body.appendChild(image);
         }
     </script>
 
-    <form action = '/camera' method = 'get'>
+    <form action = '/camera' method = 'get' onclick='changeImage()'>
       <input type = 'submit' value = 'on' name = 'led' >
     </form>
 </body>
