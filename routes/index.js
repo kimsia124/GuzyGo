@@ -38,7 +38,7 @@ module.exports = (app) => {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
   
-  app.get('/img', async function (req, res) {
+  app.get('/img', function (req, res) {
     camera.set('output', '.images/' + req.query.time + '.jpg');
     camera.start();
   }) ;
