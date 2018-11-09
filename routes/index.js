@@ -40,7 +40,7 @@ module.exports = (app) => {
   });
 
   app.get('', function(req, res) {
-    res.sendfile(path.resolve('/public/cam.html'));
+    res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
   
   app.get('/img', function (req, res) {
