@@ -43,6 +43,15 @@ module.exports = (app) => {
     res.sendfile('../public/cam.html');
   });
   
+  app.get('/img', function (req, res) {
+    console.log('get /img') ;
+      if (img_flag == 1) {
+        img_flag = 0 ;
+        res.sendfile('images/camera.jpg') ;
+      }
+  }) ;
+
+
   camera.start() ;
 
   return router;
