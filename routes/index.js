@@ -9,11 +9,7 @@ const cameraOptions = {
   encoding : 'jpg',
   output : 'images/camera.jpg',
   q : 100,
-  timeout : 10000,
-  nopreview : true,
-  th : '0:0:0'
 };
-
 // [LOAD PACKAGE]
 const camera = require('raspicam')(cameraOptions);
 const multer = require('multer');
@@ -30,10 +26,14 @@ module.exports = (app) => {
   camera.on('exit', function() {
     camera.stop();
   });
+  camera.on('read', function() {
+    camera.stop();
+  }) ;
 
   app.get('/camera', function(req, res) {
       camera.start() ;
   });
+
   app.get('', function(req, res) {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
