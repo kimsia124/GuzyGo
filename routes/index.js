@@ -29,10 +29,10 @@ module.exports = (app) => {
   });
 
   camera.on('read', function() {
-    camera.stop();
+    res.sendfile('images/' + req.query.time +'.jpg') ;
   }) ;
   camera.on("start", function(){
-    await res.sendfile('images/' + req.query.time +'.jpg') ;
+
   });
   app.get('', function(req, res) {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
