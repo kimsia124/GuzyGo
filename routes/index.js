@@ -32,20 +32,17 @@ module.exports = (app) => {
     camera.stop();
   }) ;
 
-  app.get('/camera', function(req, res) {
-    camera.start() ;
-    fs.rename('../images/camera.jpg', '../images/' + req.query.time + '.jpg', (err) => {
-      if (err) throw err;
-    });
-  });
-
   app.get('', function(req, res) {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
   
-  app.get('/img', function (req, res) {
+  app.get('/img', async function (req, res) {
     console.log('get /img') ;
-      res.sendfile('images/' + req.query.time +'.jpg') ;
+    await camera.start() ;
+    await fs.rename('../images/camera.jpg', '../images/' + req.query.time + '.jpg', (err) => {
+      if (err) throw err;
+    });
+    await res.sendfile('images/' + req.query.time +'.jpg') ;
   }) ;
 
 
