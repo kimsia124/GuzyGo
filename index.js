@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.use('/static', express.static('uploads'))
 
 // [CONFIGURE SERVER PORT]
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // [CONFIGURE ROUTER]
 const api = require('./routes/api.js')(app, Product);
