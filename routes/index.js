@@ -31,15 +31,16 @@ module.exports = (app) => {
   camera.on('read', function() {
     camera.stop();
   }) ;
-
+  camera.on("start", function(){
+    await res.sendfile('images/' + req.query.time +'.jpg') ;
+  });
   app.get('', function(req, res) {
     res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
   });
   
   app.get('/img', async function (req, res) {
     await camera.set('output', '.images/' + req.query.time + '.jpg');
-    await camera.start();
-    await res.sendfile('images/' + req.query.time +'.jpg') ;
+    camera.start();
   }) ;
 
 
