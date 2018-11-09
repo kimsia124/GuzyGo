@@ -5,9 +5,10 @@
 const cameraOptions = {
   width : 600,
   height : 420,
+  mode : 'photo',
   awb : 'off',
   encoding : 'jpg',
-  output : 'images/camera.jpg',
+  output : './images/camera.jpg',
   q : 100,
 };
 // [LOAD PACKAGE]
