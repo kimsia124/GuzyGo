@@ -27,12 +27,16 @@ module.exports = (app) => {
   camera.on('exit', function() {
     camera.stop();
   });
+
   camera.on('read', function() {
     camera.stop();
   }) ;
 
   app.get('/camera', function(req, res) {
-      camera.start() ;
+    camera.start() ;
+    fs.rename('../images/camera.jpg', '../images/' + req.query.time + '.jpg', (err) => {
+      if (err) throw err;
+    });
   });
 
   app.get('', function(req, res) {
