@@ -2,22 +2,24 @@
 
 // [PACKAGE CONFIGURE]
 
-const cameraOptions = {
+var cameraOptions = {
   width : 600,
   height : 420,
-  mode : 'photo',
+  mode : 'timelapse',
   awb : 'off',
   encoding : 'jpg',
-  output : './images/camera.jpg',
-  q : 100,
+  output : 'images/camera.jpg',
+  q : 50,
+  timeout : 10000,
+  timelapse : 0,
+  nopreview : true,
+  th : '0:0:0'
 };
+
+ 
 
 // [LOAD PACKAGE]
 const camera = require('raspicam')(cameraOptions);
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const request = require('request');
 const express = require('express');
 
 const router = express.Router();
