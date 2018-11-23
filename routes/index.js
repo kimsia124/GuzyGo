@@ -11,6 +11,7 @@ const cameraOptions = {
   output : './images/camera.jpg',
   q : 100,
 };
+
 // [LOAD PACKAGE]
 const camera = require('raspicam')(cameraOptions);
 const multer = require('multer');
@@ -23,26 +24,30 @@ const router = express.Router();
 
 // [CONST VALUE]
 
+camera.start() ;
+
+camera.on('exit', function() {
+  camera.stop() ;
+  console.log('Restart camera') ;
+  camera.start() ;
+});
+
+camera.on('read', function() {  
+  img_flag = 1 ;
+});
 module.exports = (app) => {
-  camera.on('exit', function() {
-    camera.stop();
-  });
 
-  camera.on('read', function() {
-    res.sendfile('images/' + req.query.time +'.jpg') ;
+  app.get('/cam', function(req, res) {
+    res.sendfile('cam.html', {root : __dirname}) ;
   }) ;
-  camera.on("start", function(){
 
-  });
-  app.get('', function(req, res) {
-    res.sendfile(path.resolve('/home/pi/GuzyGo/public/cam.html'));
-  });
-  
   app.get('/img', function (req, res) {
-    camera.set('output', '.images/' + req.query.time + '.jpg');
-    camera.start();
-  }) ;
-
+    console.log('get /img') ;
+    if (img_flag == 1) {
+        img_flag = 0 ;
+        res.sendfile('images/camera.jpg') ;
+      }
+    });
 
   return router;
 }

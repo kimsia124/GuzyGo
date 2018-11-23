@@ -112,8 +112,8 @@ module.exports = (app, Product) => {
       });
     });
 
-    // [GET] UPLOAD IMAGE TO KAKAO
-    app.get('/upload/:filename', (req, res) => {
+    // [GET] UPLOAD IMAGE TO KAKAO 1
+    app.get('/upload1/:filename', (req, res) => {
       const file = fs.createReadStream(path.join('D:', 'git', 'guzygo', 'uploads', `${req.params.filename}`));
 
       // 헤더 부분
@@ -134,7 +134,25 @@ module.exports = (app, Product) => {
       // 요청
       request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          res.send(body);
+          let none = [];
+          let exist = [];
+          body.objects.map((product) => {
+            Product.find({name: product.class}, (err, products) => {
+              if (err) return res.status(500).json({error: err});
+              if (products.length === 0) {
+                none.push(product);
+              } else {
+                exist.push(product);
+              }
+            })
+          });
+          res.json({
+            'msg': 'KAKAO API request success',
+            'data' : {
+              none,
+              exist,
+            },
+          });
         }
         else if (response.statusCode !== 200) {
           res.json({
@@ -144,7 +162,70 @@ module.exports = (app, Product) => {
         }
       })
     });
+    
+    // [GET] UPLOAD IMAGE TO KAKAO 2
+    app.get('/upload2/:filename', (req, res) => {
+      const file = fs.createReadStream(path.join('D:', 'git', 'guzygo', 'uploads', `${req.params.filename}`));
 
+      // 헤더 부분
+      const headers = {
+        'User-Agent': 'Super Agent/0.0.1',
+        'Content-Type': 'mulipart/form-data',
+        'Authorization': `KakaoAK ${MY_APPKEY}`
+      };
+
+      // 요청 세부 내용
+      const options = {
+        url: 'https://kapi.kakao.com/v1/vision/product/detect',
+        method:'POST',
+        headers: headers,
+        formData: {'file': file}
+      }
+
+      // 요청
+      request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          let purchase = [];
+          body.objects.map((product) => {
+            Product.find({name: product.class}, (err, product) => {
+              if(err) return res.status(500).json({ error: 'database failure', msg: err.message});
+              if(!product) return res.status(404).json({ error: 'product not found' });
+              
+              Product.update({name: product.class}, {$push: {history: {"type": "purchase", "amount": 1}}});
+              product.amount -= 1;
+      
+              product.save((err) => {
+                  if(err) res.status(500).json({error: 'failed to update'});
+                  res.json({message: 'product updated'});
+              });
+
+              const idx = purchase.indexOf({name: products.class});
+              if (idx != -1) {
+                purchase[idx].amount += 1;
+              } else {
+                purchase.push({
+                  name: products.class,
+                  amount: 1
+                });
+              }
+              
+            });
+          });
+          res.json({
+            'msg': 'KAKAO API request success',
+            'data' : {
+              purchase,
+            },
+          });
+        }
+        else if (response.statusCode !== 200) {
+          res.json({
+            'msg': 'KAKAO API request error',
+            'error': JSON.parse(body),
+          });
+        }
+      })
+    });
     // [POST] PRODUCT PURCHASE
     app.post('/purchase', (req,res) => {
       Product.update({name: req.body.name}, {$push: {history: {"type": "purchase", "amount": req.body.amount}}});
