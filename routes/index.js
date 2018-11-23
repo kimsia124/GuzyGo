@@ -10,8 +10,8 @@ var cameraOptions = {
   encoding : 'jpg',
   output : 'images/camera.jpg',
   q : 100,
-  timeout : 10000,
-  timelapse : 0,
+  timeout: 100000000,
+  timelapse : 10,
   nopreview : true,
   th : '0:0:0'
 };
@@ -39,7 +39,7 @@ module.exports = (app) => {
 
   app.get('/cam', function(req, res) {
     res.sendfile('/home/pi/GuzyGo/public/cam.html') ;
-  }) ;
+  });
 
   app.get('/img', function (req, res) {
     console.log('get /img') ;
