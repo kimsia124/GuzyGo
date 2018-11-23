@@ -23,7 +23,7 @@ const express = require('express');
 const router = express.Router();
 
 // [CONST VALUE]
-
+let img_flag = 0 ;
 camera.start() ;
 
 camera.on('exit', function() {
