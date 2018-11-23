@@ -9,14 +9,12 @@ var cameraOptions = {
   awb : 'off',
   encoding : 'jpg',
   output : 'images/camera.jpg',
-  q : 50,
+  q : 100,
   timeout : 10000,
   timelapse : 0,
   nopreview : true,
   th : '0:0:0'
 };
-
- 
 
 // [LOAD PACKAGE]
 const camera = require('raspicam')(cameraOptions);

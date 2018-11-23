@@ -10,12 +10,13 @@
       image.src = '/img'+'?time='+new Date().getTime() ;
       setInterval(function () {
           changeImage() ;
-        }, 400) ;
+        }, 100) ;
 
       function changeImage() {
-          image.src = '/img'+'?time='+new Date().getTime() ;
-          document.body.appendChild(image) ;
+          document.getElementById('image').src = '/img';
         }
     </script>
+
+    <img src="#" width="500" height="300" id="image">
   </body>
 </html>
