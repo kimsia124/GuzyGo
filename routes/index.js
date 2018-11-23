@@ -38,7 +38,7 @@ camera.on('read', function() {
 module.exports = (app) => {
 
   app.get('/cam', function(req, res) {
-    res.sendfile('/home/pi/GuzyGo/routes/cam.html') ;
+    res.sendfile('/home/pi/GuzyGo/public/cam.html') ;
   }) ;
 
   app.get('/img', function (req, res) {
