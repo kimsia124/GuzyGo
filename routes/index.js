@@ -10,6 +10,7 @@ var cameraOptions = {
   encoding : 'jpg',
   output : 'images/camera.jpg',
   q : 100,
+  br: 50,
   timeout: 1000000000000,
   timelapse: 10,
   nopreview : true,
