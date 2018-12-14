@@ -55,7 +55,7 @@
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
                 document.getElementById('none').innerHTML += `\
-                <div id="${name}-input" style="border:1px solid black; width: 250px;  margin: 10px;">\
+                <div id="${name}-input" style="border:1px solid black; margin: 10px;">\
                   <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
                     <div class="input-group mb-3">\
@@ -135,7 +135,7 @@ var submitAction = function() {
     <div id="container">
     <img src="#" width="500" height="300" id="image">
     <button onclick="cameraShoot();"  class="btn btn-secondary">촬영</button>
-    <div id="none"></div>
+    <div id="none" width= "450"></div>
     <div id="product-list"></div>
     </div>
   </body>
