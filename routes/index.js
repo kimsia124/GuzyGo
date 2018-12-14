@@ -11,6 +11,7 @@ var cameraOptions = {
   output : 'images/camera.jpg',
   q : 100,
   timeout: 1000000000000,
+  timelapse: 10,
   nopreview : true,
   th : '0:0:0'
 };
