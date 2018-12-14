@@ -5,18 +5,120 @@
   </head>
   <body>
     <h1>CAM page</h1>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type = 'text/javascript'>
-      var image = document.createElement('img') ;
-      image.src = '/img'+'?time='+new Date().getTime() ;
-      setInterval(function () {
+
+      var productsVar;
+      function purchaseProduct(name) {
+        console.log('name:', name);
+        $.ajax({
+          url: `http://localhost:8000/purchase`, // 요청 할 주소
+          // async: true, // false 일 경우 동기 요청으로 변경
+          type: 'POST',
+          data: {
+            name: name,
+            amount: 1,
+          },
+          dataType: 'json', // xml, json, script, html
+          success: function(jqXHR) {
+            document.getElementById(`${name}-product`).innerHTML = '';
+          }, // 요청 완료 시
+          error: function(jqXHR) {console.log('error')}, // 요청 실패.
+          complete: function(jqXHR) {} // 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
+        });
+      };
+      function allPurchase() {
+        console.log(productsVar);
+        productsVar.forEach((product) => {
+          console.log('product name',product);
+          purchaseProduct(product);
+        });
+      };
+      // image.src = '/img'+'?time='+new Date().getTime() ;
+      /*setInterval(function () {
           changeImage() ;
-        }, 10) ;
+        }, 10) ;*/
 
       function changeImage() {
           document.getElementById('image').src = '/img';
-        }
-    </script>
+      }
 
+      function cameraShoot() {
+        imgName = new Date().getTime();
+        // fs.rename(path.join(__dirname, 'camera.jpg'), path.join(__dirname, '${imgName}.jpg`));
+
+        $.ajax({
+            url: 'http://localhost:8000/upload1/test2.jpg', // 요청 할 주소
+            // async: true, // false 일 경우 동기 요청으로 변경
+            type: 'GET',
+            dataType: 'json', // xml, json, script, html
+            success: function(jqXHR) {
+              console.log(jqXHR);
+              if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
+              jqXHR.data.none.forEach((name) => {
+                document.getElementById('none').innerHTML += `\
+                <div id="${name}-input">
+                  <p>${name}</p>\
+                  <form action="/products" method="POST">\
+                    <input type="text" name="name" value="${name}" style="display:none">\
+                    <p>가격</p><input type="text" name="price"></input>\
+                    <p>수량</p><input type="text" name="amount"></input>\
+                    <input type="submit" onclick="cameraShoot()" value="전송"></input>
+                  </form>
+                </div>
+                `;
+              })
+            }, // 요청 완료 시
+            error: function(jqXHR) {console.log('error')}, // 요청 실패.
+            complete: function(jqXHR) {} // 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
+        });
+      }
+
+   
+
+      function uploadImage(products) {
+        productsVar = products;
+        products.forEach((product) => {
+          console.log(product);
+          $.ajax({
+              url: `http://localhost:8000/products/name/${product}`, // 요청 할 주소
+              // async: true, // false 일 경우 동기 요청으로 변경
+              type: 'GET',
+              dataType: 'json', // xml, json, script, html
+              success: function(jqXHR) {
+                document.getElementById('product-list').innerHTML += `\
+                <div id="${jqXHR.name}-product">
+                  <h3>${jqXHR.name}</h3>\
+                  <p>가격</p><p id="price">${jqXHR.price}</input>\
+                  <p>남은 수량</p><p id="amount">${jqXHR.amount}</p>\
+                  <button onclick="purchaseProduct('${jqXHR.name}')>구매</button>
+                </div>
+                `;
+              }, // 요청 완료 시
+              error: function(jqXHR) {console.log('error')}, // 요청 실패.
+              complete: function(jqXHR) {} // 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
+          });
+        })
+        document.getElementById('product-list').innerHTML += `\
+        <button onclick="allPurchase()">모두 구매</button>\
+        `;
+      };
+
+      
+
+
+
+var submitAction = function() {
+	/* do something with Error */
+    return false;
+};
+      $('form').bind('submit', submitAction);
+    </script>
     <img src="#" width="500" height="300" id="image">
+    <button onclick="cameraShoot();">촬영</button>
+    <button onclick="upload1()">업로드</button>
+    <div id="none"></div>
+    <div id="product-list"></div>
   </body>
 </html>

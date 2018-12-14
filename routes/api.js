@@ -22,6 +22,8 @@ const upload = multer({
   storage: storage,
 });
 
+console.log("???????????????????")
+
 // [CONST VALUE]
 const MY_APPKEY = '801c76388a679d223320a2ac616c78c8';
 
@@ -48,7 +50,7 @@ module.exports = (app, Product) => {
 
     // [GET] GET PRODUCT BY NAME
     app.get('/products/name/:name', (req, res) => {
-      Product.find({name: req.params.name}, (err, products) => {
+      Product.findOne({name: req.params.name}, (err, products) => {
         if (err) return res.status(500).json({error: err});
         if (products.length === 0) return res.status(404).json({error: 'product not found'});
         res.json(products);
@@ -113,8 +115,8 @@ module.exports = (app, Product) => {
     });
 
     // [GET] UPLOAD IMAGE TO KAKAO 1
-    app.get('/upload1/:filename', (req, res) => {
-      const file = fs.createReadStream(path.join('D:', 'git', 'guzygo', 'uploads', `${req.params.filename}`));
+    app.get('/upload1/:filename', async (req, res) => {
+      const file = fs.createReadStream(path.join(__dirname, '..', 'public', `${req.params.filename}`));
 
       // 헤더 부분
       const headers = {
@@ -128,39 +130,42 @@ module.exports = (app, Product) => {
         url: 'https://kapi.kakao.com/v1/vision/product/detect',
         method:'POST',
         headers: headers,
-        formData: {'file': file}
+        formData: {'file': file, 'threshold': '0.1'},
       }
 
       // 요청
-      request(options, function (error, response, body) {
+      let none = new Array;
+      let exist = new Array;
+      await request(options, async (error, response, body) => {
         if (!error && response.statusCode == 200) {
-          let none = [];
-          let exist = [];
-          body.objects.map((product) => {
-            Product.find({name: product.class}, (err, products) => {
+          body = await JSON.parse(body);
+          await body.result.objects.forEach(async (product) => {
+            await Product.find({name: product.class}, async (err, products) => {
               if (err) return res.status(500).json({error: err});
               if (products.length === 0) {
-                none.push(product);
+                await none.push(product.class);
               } else {
-                exist.push(product);
+                await exist.push(products[0].name);
               }
-            })
-          });
-          res.json({
-            'msg': 'KAKAO API request success',
-            'data' : {
-              none,
-              exist,
-            },
-          });
-        }
-        else if (response.statusCode !== 200) {
-          res.json({
+            });
+          });    
+        } /*else if (response.statusCode !== 200) {
+          await res.json({
             'msg': 'KAKAO API request error',
             'error': JSON.parse(body),
           });
-        }
-      })
+        }*/
+      });
+      setTimeout(() => {
+        res.json({
+          'msg': 'KAKAO API request success',
+          'data' : {
+            none,
+            exist,
+          },
+        });
+      }, 1500);
+      
     });
     
     // [GET] UPLOAD IMAGE TO KAKAO 2
@@ -186,7 +191,7 @@ module.exports = (app, Product) => {
       request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           let purchase = [];
-          body.objects.map((product) => {
+          body.results.objects.map((product) => {
             Product.find({name: product.class}, (err, product) => {
               if(err) return res.status(500).json({ error: 'database failure', msg: err.message});
               if(!product) return res.status(404).json({ error: 'product not found' });
@@ -226,10 +231,11 @@ module.exports = (app, Product) => {
         }
       })
     });
+
     // [POST] PRODUCT PURCHASE
     app.post('/purchase', (req,res) => {
       Product.update({name: req.body.name}, {$push: {history: {"type": "purchase", "amount": req.body.amount}}});
-      Product.find({name: req.body.name}, (err, product) => {
+      Product.findOne({name: req.body.name}, (err, product) => {
         if(err) return res.status(500).json({ error: 'database failure', msg: err.message});
         if(!product) return res.status(404).json({ error: 'product not found' });
 
