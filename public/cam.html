@@ -55,23 +55,17 @@
               console.log(jqXHR);
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
-                /*const form = `\
+                const form = `\
                 <div id="${name}-input">
                   <p>${name}</p>\
                   <form action="/products" method="POST">\
                     <input type="text" name="name" value="${name}" style="display:none">\
                     <p>가격</p><input type="text" name="price"></input>\
                     <p>수량</p><input type="text" name="amount"></input>\
-                    <input type="submit" onclick="cameraShoot()" value="전송"></input>
-                  </form>
-                </div>
-                `;*/
-                var form = $('<form><input type="text" name="name" value="${name}" style="display:none">\
-                    <p>가격</p><input type="text" name="price"></input>\
-                    <p>수량</p><input type="text" name="amount"></input>\
-                    <input type="submit" onclick="cameraShoot()" value="전송"></input></form>');
-                form.attr('action', '/products',);
-                form.attr('method', 'POST');
+                    <input type="submit" onclick="cameraSh\oot()" value="전송"></input>\
+                  </form>\
+                </div>\
+                `;
                 document.body.appendChild(form);
               })
             }, // 요청 완료 시
