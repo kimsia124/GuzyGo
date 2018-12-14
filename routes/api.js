@@ -137,6 +137,7 @@ module.exports = (app, Product) => {
       let none = new Array;
       let exist = new Array;
       await request(options, async (error, response, body) => {
+        console.log(response.statusCode, body);
         if (!error && response.statusCode == 200) {
           body = await JSON.parse(body);
           await body.result.objects.forEach(async (product) => {
