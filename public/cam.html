@@ -54,18 +54,30 @@
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
                 document.getElementById('none').innerHTML += `\
-                <div id="${name}-input">
-                  <p>${name}</p>\
+                <div id="${name}-input" style="border:1px;">
+                  <h3 class="display-3">${name}</h3>\
                   <form action="/products" method="POST">\
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">가격</span>
+                      </div>
+                      <input type="text" name="price" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">수량</span>
+                      </div>
+                      <input type="text" nmae="amount" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
                     <input type="text" name="name" value="${name}" style="display:none">\
-                    <p>가격</p><input type="text" name="price"></input>\
-                    <p>수량</p><input type="text" name="amount"></input>\
-                    <input type="submit" onclick="cameraShoot()" value="전송"></input>
+                    <input class="btn btn-secondary" type="submit" onclick="cameraShoot()" value="전송"></input>
                   </form>
                 </div>
                 `;
               })
             }, // 요청 완료 시
+                    // <p>가격</p><input type="text" name="price"></input>\
+                    // <p>수량</p><input type="text" name="amount"></input>\
             error: function(jqXHR) {console.log('error')}, // 요청 실패.
             complete: function(jqXHR) {} // 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
         });
@@ -85,10 +97,10 @@
               success: function(jqXHR) {
                 document.getElementById('product-list').innerHTML += `\
                 <div id="${jqXHR.name}-product">
-                  <h3>${jqXHR.name}</h3>\
+                  <h3 class="display-3">${jqXHR.name}</h3>\
                   <p>가격</p><p id="price">${jqXHR.price}</input>\
                   <p>남은 수량</p><p id="amount">${jqXHR.amount}</p>\
-                  <button onclick="purchaseProduct('${jqXHR.name}')>구매</button>
+                  <button class="btn btn-secondary" onclick="purchaseProduct('${jqXHR.name}')>구매</button>
                 </div>
                 `;
               }, // 요청 완료 시
