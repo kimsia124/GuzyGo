@@ -58,18 +58,8 @@
                 <div id="${name}-input" style="border:1px solid black; margin: 10px;">\
                   <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
-                    <div class="input-group mb-3">\
-                      <div class="input-group-prepend">\
-                        <span class="input-group-text" id="basic-addon1">가격</span>\
-                      </div>\
-                      <input type="text" name="price" class="form-control" aria-describedby="basic-addon1">\
-                    </div>\
-                    <div class="input-group mb-3">\
-                      <div class="input-group-prepend">\
-                        <span class="input-group-text" id="basic-addon1">수량</span>\
-                      </div>\
-                      <input type="text" nmae="amount" class="form-control" aria-describedby="basic-addon1">\
-                    </div>\
+                    <p>가격</p><input type="text" name="price"></input>\
+                    <p>수량</p><input type="text" name="amount"></input>\
                     <input type="text" name="name" value="${name}" style="display:none">\
                     <input class="btn btn-secondary" type="submit" onclick="cameraShoot()" value="전송"></input>\
                   </form>\
@@ -77,8 +67,6 @@
                 `;
               })
             }, // 요청 완료 시
-                    // <p>가격</p><input type="text" name="price"></input>\
-                    // <p>수량</p><input type="text" name="amount"></input>\
             error: function(jqXHR) {console.log('error')}, // 요청 실패.
             complete: function(jqXHR) {} // 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
         });
