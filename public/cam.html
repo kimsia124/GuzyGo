@@ -54,16 +54,16 @@
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
                 document.getElementById('none').innerHTML += `\
-                <div id="${name}-input" style="border:1px solid black;">
+                <div id="${name}-input" style="border:1px solid black; width: 80px;">
                   <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
-                    <div class="input-group mb-3" width="100px">
+                    <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">가격</span>
                       </div>
                       <input type="text" name="price" class="form-control" aria-describedby="basic-addon1">
                     </div>
-                    <div class="input-group mb-3" width="100px">
+                    <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">수량</span>
                       </div>
