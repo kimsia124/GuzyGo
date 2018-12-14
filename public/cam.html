@@ -17,7 +17,7 @@
       function purchaseProduct(name) {
         console.log('name:', name);
         $.ajax({
-          url: `http://192.168.10.378000/purchase`, // 요청 할 주소
+          url: `http://192.168.10.37:8000/purchase`, // 요청 할 주소
           // async: true, // false 일 경우 동기 요청으로 변경
           type: 'POST',
           data: {
@@ -47,7 +47,7 @@
         document.getElementById('none').innerHTML = '';
         document.getElementById('product-list').innerHTML = '';
         $.ajax({
-            url: `http://192.168.10.378:000/upload1/camera.jpg`, // 요청 할 주소
+            url: `http://192.168.10.37:8000/upload1/camera.jpg`, // 요청 할 주소
             // async: true, // false 일 경우 동기 요청으로 변경
             type: 'GET',
             dataType: 'json', // xml, json, script, html
