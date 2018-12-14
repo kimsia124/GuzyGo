@@ -44,6 +44,7 @@
 
       function cameraShoot() {
         const imgName = new Date().getTime();
+                        document.getElementById('none').innerHTML = '';
         $.ajax({
             url: `http://localhost:8000/upload1/camera.jpg`, // 요청 할 주소
             // async: true, // false 일 경우 동기 요청으로 변경
@@ -54,7 +55,7 @@
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
                 document.getElementById('none').innerHTML += `\
-                <div id="${name}-input" style="border:1px solid black; width: 80px;">
+                <div id="${name}-input" style="border:1px solid black; width: 150px;">
                   <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
                     <div class="input-group mb-3">
