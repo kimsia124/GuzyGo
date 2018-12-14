@@ -48,7 +48,7 @@ gstreamer.on('exit', function (code) {
   }
   process.exit();
 });
-
+*/
 
 camera.start() ;
 
@@ -61,7 +61,7 @@ camera.on('exit', function() {
 camera.on('read', function() {  
   img_flag = 1 ;
 });
-*/
+
 module.exports = (app) => {
   app.get('/', function (req, res) {
     var date = new Date();
