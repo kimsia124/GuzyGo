@@ -233,7 +233,7 @@ module.exports = (app, Product) => {
     });
 
     // [POST] PRODUCT PURCHASE
-    app.post('/purchase', (req,res) => {
+    app.post('/purchase', (req, res) => {
       Product.update({name: req.body.name}, {$push: {history: {"type": "purchase", "amount": req.body.amount}}});
       Product.findOne({name: req.body.name}, (err, product) => {
         if(err) return res.status(500).json({ error: 'database failure', msg: err.message});
