@@ -58,11 +58,11 @@
                 <div id="${name}-input" style="border:1px solid black; margin: 10px;">\
                   <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
+                    <input type="text" name="name" value="${name}" style="display:none">\
                     <p>가격</p><input type="text" name="price"></input>\
                     <p>수량</p><input type="text" name="amount"></input>\
-                    <input type="text" name="name" value="${name}" style="display:none">\
-                    <input class="btn btn-secondary" type="submit" onclick="cameraShoot()" value="전송"></input>\
-                  </form>\
+                    <input type="submit" onclick="cameraShoot()" value="전송"></input>
+                  </form>
                 </div>\
                 `;
               })
