@@ -54,20 +54,20 @@
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
                 document.getElementById('none').innerHTML += `\
-                <div id="${name}-input" style="border:1px;">
-                  <h3 class="display-3">${name}</h3>\
+                <div id="${name}-input" style="border:1px solid black;">
+                  <h3 class="display-5">${name}</h3>\
                   <form action="/products" method="POST">\
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" width="100px">
                       <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">가격</span>
                       </div>
-                      <input type="text" name="price" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                      <input type="text" name="price" class="form-control" aria-describedby="basic-addon1">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" width="100px">
                       <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">수량</span>
                       </div>
-                      <input type="text" nmae="amount" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                      <input type="text" nmae="amount" class="form-control" aria-describedby="basic-addon1">
                     </div>
                     <input type="text" name="name" value="${name}" style="display:none">\
                     <input class="btn btn-secondary" type="submit" onclick="cameraShoot()" value="전송"></input>
@@ -133,8 +133,7 @@ var submitAction = function() {
     </script>
     <div id="container">
     <img src="#" width="500" height="300" id="image">
-    <button onclick="cameraShoot();">촬영</button>
-    <button onclick="upload1()">업로드</button>
+    <button onclick="cameraShoot();"  class="btn btn-secondary">촬영</button>
     <div id="none"></div>
     <div id="product-list"></div>
     </div>
