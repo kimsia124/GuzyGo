@@ -40,10 +40,8 @@
 
       function cameraShoot() {
         const imgName = new Date().getTime();
-        fs.rename(path.join(__dirname, '..', 'images', 'camera.jpg'), path.join(__dirname, `${imgName}.jpg`));
-
         $.ajax({
-            url: `http://localhost:8000/upload1/${imgName}.jpg`, // 요청 할 주소
+            url: `http://localhost:8000/upload1/camera.jpg`, // 요청 할 주소
             // async: true, // false 일 경우 동기 요청으로 변경
             type: 'GET',
             dataType: 'json', // xml, json, script, html

@@ -116,7 +116,7 @@ module.exports = (app, Product) => {
 
     // [GET] UPLOAD IMAGE TO KAKAO 1
     app.get('/upload1/:filename', async (req, res) => {
-      const file = fs.createReadStream(path.join(__dirname, '..', 'public', `${req.params.filename}`));
+      const file = fs.createReadStream(path.join(__dirname, '..', 'images', `${req.params.filename}`));
 
       // 헤더 부분
       const headers = {
