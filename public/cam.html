@@ -36,9 +36,7 @@
         });
       };
 
-      function changeImage() {
-          document.getElementById('image').src = '/img';
-      }
+
 
       function cameraShoot() {
         imgName = new Date().getTime();
@@ -101,10 +99,14 @@
         `;
       };
 
-      
+      function changeImage() {
+          document.getElementById('image').src = '/img';
+      }
+
       setInterval(function () {
+        console.log('test');
           changeImage() ;
-      }, 10) ;
+      }, 50) ;
 
 
 
