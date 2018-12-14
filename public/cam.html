@@ -98,14 +98,15 @@
         <button onclick="allPurchase()">모두 구매</button>\
         `;
       };
-
+      var num=0;
       function changeImage() {
-          document.getElementById('image').src = '/img';
+        num = num + 1;
+        document.getElementById('image').src = '/img?num=' + num;
       }
 
       setInterval(function () {
         console.log('test');
-          changeImage() ;
+        changeImage() ;
       }, 50) ;
 
 
