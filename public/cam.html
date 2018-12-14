@@ -55,7 +55,9 @@
               console.log(jqXHR);
               if (jqXHR.data.none.length < 1 || jqXHR.data.none === null || jqXHR.data.none === undefined) uploadImage(jqXHR.data.exist);
               jqXHR.data.none.forEach((name) => {
-                const form = `\
+                const form = document.createElement('div');
+                
+                form.innerHTML = `\
                 <div id="${name}-input">
                   <p>${name}</p>\
                   <form action="/products" method="POST">\
